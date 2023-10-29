@@ -21,7 +21,8 @@ spec:
       volumeMounts:
         - mountPath: /common
           name: common
-volumes:
-  - name: common
-    emptyDir:
-      sizeLimit: 5Mi
+  volumes:
+    - name: common
+      emptyDir:
+        sizeLimit: 5Mi
+
