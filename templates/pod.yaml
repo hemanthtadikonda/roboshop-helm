@@ -16,7 +16,7 @@ spec:
       image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-ps-init-cont:2.0.0
       env:
         - name: PARAMETERS
-          value: { { .Values.PARAMETERS } }
+          value: {{ .Values.PARAMETERS }}
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /common

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.component }}
   labels:
-    app.kubernetes.io/name: { { .Values.component } }
+    app.kubernetes.io/name: {{ .Values.component }}
 spec:
   type: {{ .Values.service_type }}
   selector:

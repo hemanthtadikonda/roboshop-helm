@@ -4,13 +4,20 @@ kind: Job
 metadata:
   name: {{ .Values.component }}
   labels:
-    app.kubernetes.io/name: { { .Values.component } }
+    app.kubernetes.io/name: {{ .Values.component }}
 spec:
   template:
     spec:
       containers:
         - name: roboshop-schema-init-cont
           image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.0
+          env:
+          - name: env
+            value: {{ .Values.dev }}
+          - name: COMPONENT
+            value: {{ .Values.component }}
+          - name: DB_TYPE
+            value: {{ .Values.schema.db_type }}
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
