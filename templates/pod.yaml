@@ -20,6 +20,7 @@ spec:
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /common
+          name: common
 
 volumes:
   - name: /common
