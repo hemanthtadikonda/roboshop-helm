@@ -7,4 +7,21 @@ metadata:
 spec:
   containers:
     - name: {{ .Values.component }}
-      image: rkalluru/{{ .Values.component }}
+      image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.app_version }}
+      volumeMounts:
+        - mountPath: /common
+          name: common
+  initContainers:
+    - name: roboshop-ps-init-cont
+      image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-ps-init-cont:2.0.0
+      env:
+        - name: PARAMETERS
+          value: { { .Values.PARAMETERS } }
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /common
+
+volumes:
+  - name: /common
+    emptyDir:
+      sizeLimit: 5Mi
