@@ -21,7 +21,6 @@ spec:
       volumeMounts:
         - mountPath: /common
           name: common
-
 volumes:
   - name: common
     emptyDir:
