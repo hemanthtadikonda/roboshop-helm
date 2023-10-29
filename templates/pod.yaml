@@ -23,6 +23,6 @@ spec:
           name: common
 
 volumes:
-  - name: /common
+  - name: common
     emptyDir:
       sizeLimit: 5Mi
