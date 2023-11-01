@@ -18,7 +18,7 @@ spec:
           - name: COMPONENT
             value: {{ .Values.component }}
           - name: DB_TYPE
-            value: {{ .Values.schema.db_type }}
+            value: {{ .Values.schema.DB_TYPE }}
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
