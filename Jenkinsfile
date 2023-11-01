@@ -32,7 +32,7 @@ pipeline {
       stage('Helm Deploy') {
          steps {
             //sh 'helm install ${COMPONENT} ./CHART -f /APP/helm/${ENV}.yaml --set APP_VERSION=${APP_VERSION}'
-            sh 'helm upgrade -i ${COMPONENT} ./CHART -f /APP/helm/${ENV}.yaml --set APP_VERSION=${APP_VERSION}'
+            sh 'helm upgrade -i ${COMPONENT} ./CHART -f APP/helm/${ENV}.yaml --set APP_VERSION=${APP_VERSION}'
          }
       }
    }
