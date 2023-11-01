@@ -11,7 +11,7 @@ spec:
       serviceAccountName: {{ .Values.component }}
       containers:
         - name: roboshop-schema-init-cont
-          image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.3
+          image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.4
           env:
           - name: env
             value: {{ .Values.dev }}
