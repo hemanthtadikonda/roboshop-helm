@@ -10,6 +10,11 @@ pipeline {
     }
 
    stages {
+      stage('Get Kubeconfig') {
+         steps {
+            sh 'aws eks update-kubeconfig --name ${ENV}-roboshop'
+         }
+      }
       stage('Get APP code') {
          steps {
             dir('APP') {
