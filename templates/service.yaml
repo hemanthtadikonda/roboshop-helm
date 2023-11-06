@@ -12,5 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ .Values.component }}
     {{- include "roboshop.selectorLabels" . | nindent 4 }}

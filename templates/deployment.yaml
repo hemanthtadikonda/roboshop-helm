@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: {{ .Values.component }}
   labels:
-    app.kubernetes.io/name: {{ .Values.component }}
     {{- include "roboshop.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
