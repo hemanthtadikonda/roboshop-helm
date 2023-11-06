@@ -3,11 +3,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.component }}
-  labels:
-    app.kubernetes.io/name: {{ .Values.component }}
-    { { - include "roboshop.labels" . | nindent 4 } }
-  annotations:
-    "helm.sh/hook": pre-install
 spec:
   template:
     spec:
