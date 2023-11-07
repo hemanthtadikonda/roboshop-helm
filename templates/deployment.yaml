@@ -3,30 +3,18 @@ kind: Deployment
 metadata:
   name: {{ .Values.component }}
   labels:
-    {{- include "roboshop.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.component }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      {{- include "roboshop.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.component }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "roboshop.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.component }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       serviceAccountName: {{ .Values.component }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
         - name: common
           emptyDir:
@@ -36,43 +24,16 @@ spec:
           image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/roboshop-ps-init-cont:2.0.1
           env:
             - name: PARAMETERS
-              value: {{ .Values.PARAMETERS }}
+              value: { { .Values.PARAMETERS } }
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /common
               name: common
       containers:
         - name: {{ .Values.component }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: 043254050286.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.app_version }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.port }}
           volumeMounts:
             - mountPath: /common
               name: common
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
